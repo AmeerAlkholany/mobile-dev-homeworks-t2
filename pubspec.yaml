@@ -1,5 +1,5 @@
 name: flutter_application_1
-description: "A new Flutter project."
+description: "Ejary Platform — real estate and rental marketplace (منصة إيجاري)."
 publish_to: 'none'
 version: 0.1.0+1
 
@@ -9,6 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  get: ^4.7.2
+  get_storage: ^2.1.1
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:

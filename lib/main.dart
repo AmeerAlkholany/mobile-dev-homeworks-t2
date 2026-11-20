@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-void main() {
-  runApp(const MainApp());
-}
+import 'app.dart';
+import 'core/services/storage_service.dart';
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(body: Center(child: Text('Hello World!'))),
-    );
-  }
+  // Persistent services are booted before the first frame so theme, locale and
+  // session are already resolved when the splash screen appears.
+  await Get.putAsync<StorageService>(
+    () => StorageService().init(),
+    permanent: true,
+  );
+
+  runApp(const EjaryApp());
 }
