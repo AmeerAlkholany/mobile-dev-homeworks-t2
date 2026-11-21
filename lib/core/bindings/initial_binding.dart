@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 
 import '../services/auth_service.dart';
+import '../services/currency_service.dart';
+import '../services/data_refresh_service.dart';
 import '../services/locale_service.dart';
 import '../services/storage_service.dart';
 import '../services/theme_service.dart';
@@ -15,6 +17,8 @@ class InitialBinding extends Bindings {
 
     Get.put<ThemeService>(ThemeService(storage).init(), permanent: true);
     Get.put<LocaleService>(LocaleService(storage).init(), permanent: true);
+    Get.put<CurrencyService>(CurrencyService(storage).init(), permanent: true);
     Get.put<AuthService>(AuthService(storage).init(), permanent: true);
+    Get.put<DataRefreshService>(DataRefreshService(), permanent: true);
   }
 }

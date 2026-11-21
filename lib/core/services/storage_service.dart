@@ -1,18 +1,36 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:path_provider/path_provider.dart';
 
 /// Thin, typed wrapper around [GetStorage]. Every persistent value in Ejary
 /// (theme, locale, onboarding flag, session, favorites, bookings) goes through
 /// this service so the storage backend stays swappable and testable.
 class StorageService extends GetxService {
+  /// GetStorage container name, shared by [GetStorage.init] and the box itself.
+  static const String _container = 'GetStorage';
+
   late final GetStorage _box;
 
   GetStorage get box => _box;
 
   /// Boots GetStorage. Registered with `Get.putAsync` in `main.dart`.
+  ///
+  /// The box lives in the app-support directory rather than the platform
+  /// default (`Documents` on Windows), which may not exist for the current user
+  /// and made GetStorage throw `PathNotFoundException` on startup.
   Future<StorageService> init() async {
-    await GetStorage.init();
-    _box = GetStorage();
+    final Directory dir = await getApplicationSupportDirectory();
+    if (!await dir.exists()) {
+      await dir.create(recursive: true);
+    }
+    // get_storage 2.1.x takes the directory on the box constructor, and
+    // `GetStorage.init` only accepts a container name: it reuses the instance
+    // already created for that container, so the box must be built first for
+    // the init call to honour [dir] instead of the default Documents path.
+    _box = GetStorage(_container, dir.path);
+    await GetStorage.init(_container);
     return this;
   }
 

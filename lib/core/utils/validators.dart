@@ -9,6 +9,7 @@ class AppValidators {
     r'^[\w.+-]+@[\w-]+\.[\w.-]+$',
   );
   static final RegExp _phonePattern = RegExp(r'^\+?[0-9]{9,15}$');
+  static final RegExp _nationalIdPattern = RegExp(r'^[0-9]{10}$');
 
   static String? required(String? value) {
     if (value == null || value.trim().isEmpty) {
@@ -47,6 +48,29 @@ class AppValidators {
     final String normalized = value!.replaceAll(RegExp(r'[\s-]'), '');
     if (!_phonePattern.hasMatch(normalized)) {
       return 'validation_phone'.tr;
+    }
+    return null;
+  }
+
+  static String? nationalId(String? value) {
+    final String? empty = required(value);
+    if (empty != null) {
+      return empty;
+    }
+    if (!_nationalIdPattern.hasMatch(value!.trim())) {
+      return 'validation_national_id'.tr;
+    }
+    return null;
+  }
+
+  static String? amount(String? value) {
+    final String? empty = required(value);
+    if (empty != null) {
+      return empty;
+    }
+    final double? parsed = double.tryParse(value!.trim());
+    if (parsed == null || parsed <= 0) {
+      return 'validation_amount'.tr;
     }
     return null;
   }
