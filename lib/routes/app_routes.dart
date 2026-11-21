@@ -7,6 +7,8 @@ class AppRoutes {
   static const String login = '/login';
   static const String register = '/register';
   static const String main = '/main';
-  static const String propertyDetails = '/property-details';
-  static const String bookingFlow = '/booking-flow';
+  static const String unitForm = '/unit-form';
+  static const String unitDetails = '/unit-details';
+  static const String tenantForm = '/tenant-form';
+  static const String tenantDetails = '/tenant-details';
 }

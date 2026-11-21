@@ -72,7 +72,7 @@ class ProfilePage extends GetView<ProfileController> {
                           ),
                           const SizedBox(height: 6),
                           AppPill(
-                            label: 'verified_listing'.tr,
+                            label: 'verified_landlord'.tr,
                             icon: Icons.verified_rounded,
                             background: scheme.primaryContainer,
                             foreground: scheme.onPrimaryContainer,

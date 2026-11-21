@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 
-import 'core/bindings/initial_binding.dart';
 import 'core/localization/app_translations.dart';
 import 'core/services/locale_service.dart';
 import 'core/services/theme_service.dart';
@@ -36,7 +35,6 @@ class EjaryApp extends StatelessWidget {
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
         themeMode: themeService.themeModeRx.value,
-        initialBinding: InitialBinding(),
         initialRoute: AppRoutes.splash,
         getPages: AppPages.pages,
         defaultTransition: Transition.cupertino,

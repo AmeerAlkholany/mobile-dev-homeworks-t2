@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
 
 import '../../../../core/utils/di.dart';
-import '../../../bookings/presentation/bindings/my_bookings_binding.dart';
-import '../../../favorites/presentation/bindings/favorites_binding.dart';
+import '../../../dashboard/presentation/bindings/dashboard_binding.dart';
+import '../../../payments/presentation/bindings/payments_binding.dart';
 import '../../../profile/presentation/bindings/profile_binding.dart';
-import '../../../properties/presentation/bindings/home_binding.dart';
+import '../../../tenants/presentation/bindings/tenants_binding.dart';
+import '../../../units/presentation/bindings/units_binding.dart';
 import '../controllers/main_nav_controller.dart';
 
 /// The app shell composes every tab, so it registers each tab's feature graph
@@ -12,9 +13,10 @@ import '../controllers/main_nav_controller.dart';
 class MainNavBinding extends Bindings {
   @override
   void dependencies() {
-    HomeBinding().dependencies();
-    FavoritesBinding().dependencies();
-    MyBookingsBinding().dependencies();
+    DashboardBinding().dependencies();
+    UnitsBinding().dependencies();
+    TenantsBinding().dependencies();
+    PaymentsBinding().dependencies();
     ProfileBinding().dependencies();
     registerLazy<MainNavController>(() => MainNavController());
   }

@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../bookings/presentation/pages/my_bookings_page.dart';
-import '../../../favorites/presentation/pages/favorites_page.dart';
+import '../../../dashboard/presentation/pages/dashboard_page.dart';
+import '../../../payments/presentation/pages/payments_page.dart';
 import '../../../profile/presentation/pages/profile_page.dart';
-import '../../../properties/presentation/pages/home_page.dart';
+import '../../../tenants/presentation/pages/tenants_page.dart';
+import '../../../units/presentation/pages/units_page.dart';
 import '../controllers/main_nav_controller.dart';
 
 class MainNavPage extends GetView<MainNavController> {
   const MainNavPage({super.key});
 
   static const List<Widget> _tabs = <Widget>[
-    HomePage(),
-    FavoritesPage(),
-    MyBookingsPage(),
+    DashboardPage(),
+    UnitsPage(),
+    TenantsPage(),
+    PaymentsPage(),
     ProfilePage(),
   ];
 
@@ -34,19 +36,24 @@ class MainNavPage extends GetView<MainNavController> {
           onDestinationSelected: navController.changeTab,
           destinations: <NavigationDestination>[
             NavigationDestination(
-              icon: const Icon(Icons.explore_outlined),
-              selectedIcon: const Icon(Icons.explore_rounded),
-              label: 'nav_home'.tr,
+              icon: const Icon(Icons.dashboard_outlined),
+              selectedIcon: const Icon(Icons.dashboard_rounded),
+              label: 'nav_dashboard'.tr,
             ),
             NavigationDestination(
-              icon: const Icon(Icons.favorite_border_rounded),
-              selectedIcon: const Icon(Icons.favorite_rounded),
-              label: 'nav_favorites'.tr,
+              icon: const Icon(Icons.apartment_outlined),
+              selectedIcon: const Icon(Icons.apartment_rounded),
+              label: 'nav_units'.tr,
             ),
             NavigationDestination(
-              icon: const Icon(Icons.event_note_outlined),
-              selectedIcon: const Icon(Icons.event_note_rounded),
-              label: 'nav_bookings'.tr,
+              icon: const Icon(Icons.people_outline_rounded),
+              selectedIcon: const Icon(Icons.people_rounded),
+              label: 'nav_tenants'.tr,
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.payments_outlined),
+              selectedIcon: const Icon(Icons.payments_rounded),
+              label: 'nav_payments'.tr,
             ),
             NavigationDestination(
               icon: const Icon(Icons.person_outline_rounded),

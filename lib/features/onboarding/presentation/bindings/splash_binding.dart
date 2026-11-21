@@ -20,8 +20,11 @@ class SplashBinding extends Bindings {
     registerLazy<GetOnboardingStatusUseCase>(
       () => GetOnboardingStatusUseCase(Get.find<OnboardingRepository>()),
     );
-    registerLazy<SplashController>(
-      () => SplashController(
+    // `SplashPage` renders without reading the controller, so a lazy
+    // registration would never be instantiated and `onInit` (which schedules
+    // the redirect off the splash screen) would never run.
+    Get.put<SplashController>(
+      SplashController(
         Get.find<GetOnboardingStatusUseCase>(),
         Get.find<AuthService>(),
       ),

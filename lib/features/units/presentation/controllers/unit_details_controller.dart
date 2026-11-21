@@ -1,9 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/services/data_refresh_service.dart';
 import '../../../../routes/app_routes.dart';
 import '../../../tenants/domain/entities/tenant_entity.dart';
 import '../../../tenants/domain/usecases/get_tenant_by_unit_usecase.dart';
 import '../../domain/entities/unit_entity.dart';
+import '../../domain/usecases/delete_unit_usecase.dart';
 import '../../domain/usecases/get_unit_by_id_usecase.dart';
 
 class UnitDetailsBundle {
@@ -15,13 +18,25 @@ class UnitDetailsBundle {
 
 class UnitDetailsController
     extends GetxController with StateMixin<UnitDetailsBundle> {
-  UnitDetailsController(this._getUnit, this._getTenantByUnit, this._unitId);
+  UnitDetailsController(
+    this._getUnit,
+    this._getTenantByUnit,
+    this._deleteUnit,
+    this._refresh,
+    this._unitId,
+  );
 
   final GetUnitByIdUseCase _getUnit;
   final GetTenantByUnitUseCase _getTenantByUnit;
+  final DeleteUnitUseCase _deleteUnit;
+  final DataRefreshService _refresh;
   final String _unitId;
 
   UnitEntity? unit;
+
+  /// Last loaded bundle. Exposed publicly because `StateMixin.value` is
+  /// protected and pages only need to read it.
+  final Rxn<UnitDetailsBundle> bundle = Rxn<UnitDetailsBundle>();
 
   @override
   void onInit() {
@@ -30,6 +45,7 @@ class UnitDetailsController
   }
 
   Future<void> load() async {
+    bundle.value = null;
     change(null, status: RxStatus.loading());
     try {
       final UnitEntity? found = await _getUnit(_unitId);
@@ -41,10 +57,8 @@ class UnitDetailsController
       unit = found;
       final TenantEntity? tenant =
           found.isOccupied ? await _getTenantByUnit(found.id) : null;
-      change(
-        UnitDetailsBundle(unit: found, tenant: tenant),
-        status: RxStatus.success(),
-      );
+      bundle.value = UnitDetailsBundle(unit: found, tenant: tenant);
+      change(bundle.value, status: RxStatus.success());
     } catch (_) {
       change(null, status: RxStatus.error('error_units'.tr));
     }
@@ -73,5 +87,30 @@ class UnitDetailsController
       AppRoutes.main,
       arguments: <String, dynamic>{'tab': 3},
     );
+  }
+
+  Future<void> delete() async {
+    final UnitEntity? current = unit;
+    if (current == null) {
+      return;
+    }
+    try {
+      await _deleteUnit(current.id);
+      _refresh.notifyChanged();
+      Get.back<void>();
+      Get.snackbar(
+        'app_name'.tr,
+        'unit_deleted'.tr,
+        snackPosition: SnackPosition.BOTTOM,
+        margin: const EdgeInsets.all(16),
+      );
+    } catch (_) {
+      Get.snackbar(
+        'app_name'.tr,
+        'error_generic'.tr,
+        snackPosition: SnackPosition.BOTTOM,
+        margin: const EdgeInsets.all(16),
+      );
+    }
   }
 }

@@ -100,9 +100,9 @@ const Map<String, String> enUs = <String, String>{
   'alerts_empty_desc': 'No outstanding payments for the current month.',
   'error_dashboard': 'Could not load your dashboard',
   'error_dashboard_desc': 'Check your data and try again.',
-  'occupancy_summary': '{occupied} occupied · {vacant} vacant',
+  'occupancy_summary': '@occupied occupied · @vacant vacant',
   'rate_value': '{rate}%',
-  'unit_count_value': '{count} units',
+  'unit_count_value': '@count units',
   'view_payments': 'View payments',
 
   // Units.
@@ -115,6 +115,7 @@ const Map<String, String> enUs = <String, String>{
   'monthly_rent': 'Monthly rent',
   'unit_status': 'Status',
   'area_sqm': 'Area (m²)',
+  'sqm': 'm²',
   'bedrooms': 'Bedrooms',
   'unit_notes': 'Notes',
   'edit_unit': 'Edit unit',
@@ -186,9 +187,9 @@ const Map<String, String> enUs = <String, String>{
   'payment_history': 'Payment history',
   'ends_on': 'Ends on',
   'started_on': 'Started on',
-  'lease_ends_in_days': 'Lease ends in {days} days',
+  'lease_ends_in_days': 'Lease ends in @days days',
   'lease_ended': 'Lease ended',
-  'tenant_count_value': '{count} tenants',
+  'tenant_count_value': '@count tenants',
 
   // Payments.
   'payments_title': 'Payments',
@@ -233,7 +234,7 @@ const Map<String, String> enUs = <String, String>{
   'error_payment_exceeds': 'Amount cannot exceed the rent due for this month',
   'select_month': 'Billing month',
   'error_tenant_required': 'Please select a tenant',
-  'payment_receipt_for': 'Receipt for {name}',
+  'payment_receipt_for': 'Receipt for @name',
 
   // Profile.
   'profile_title': 'Profile',

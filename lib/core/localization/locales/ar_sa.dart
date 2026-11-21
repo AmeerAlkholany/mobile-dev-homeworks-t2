@@ -100,9 +100,9 @@ const Map<String, String> arSa = <String, String>{
   'alerts_empty_desc': 'لا توجد دفعات مستحقة للشهر الحالي.',
   'error_dashboard': 'تعذّر تحميل لوحة التحكم',
   'error_dashboard_desc': 'تحقق من البيانات وحاول مرة أخرى.',
-  'occupancy_summary': '{occupied} مشغولة · {vacant} شاغرة',
+  'occupancy_summary': '@occupied مشغولة · @vacant شاغرة',
   'rate_value': '{rate}٪',
-  'unit_count_value': '{count} وحدة',
+  'unit_count_value': '@count وحدة',
   'view_payments': 'عرض الدفعات',
 
   // Units.
@@ -114,6 +114,7 @@ const Map<String, String> arSa = <String, String>{
   'unit_type': 'نوع الوحدة',
   'monthly_rent': 'الإيجار الشهري',
   'unit_status': 'الحالة',
+  'sqm': 'م²',
   'area_sqm': 'المساحة (م²)',
   'bedrooms': 'غرف النوم',
   'unit_notes': 'ملاحظات',
@@ -184,9 +185,9 @@ const Map<String, String> arSa = <String, String>{
   'payment_history': 'سجل الدفعات',
   'ends_on': 'ينتهي في',
   'started_on': 'بدأ في',
-  'lease_ends_in_days': 'ينتهي العقد بعد {days} يوماً',
+  'lease_ends_in_days': 'ينتهي العقد بعد @days يوماً',
   'lease_ended': 'انتهى العقد',
-  'tenant_count_value': '{count} مستأجر',
+  'tenant_count_value': '@count مستأجر',
 
   // Payments.
   'payments_title': 'الدفعات',
@@ -230,7 +231,7 @@ const Map<String, String> arSa = <String, String>{
   'error_payment_exceeds': 'المبلغ لا يمكن أن يتجاوز إيجار هذا الشهر',
   'select_month': 'شهر الفاتورة',
   'error_tenant_required': 'يرجى اختيار المستأجر',
-  'payment_receipt_for': 'سند استلام من {name}',
+  'payment_receipt_for': 'سند استلام من @name',
 
   // Profile.
   'profile_title': 'حسابي',
