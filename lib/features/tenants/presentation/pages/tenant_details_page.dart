@@ -25,25 +25,31 @@ class TenantDetailsPage extends GetView<TenantDetailsController> {
       appBar: AppBar(
         title: Text('tenant_details'.tr),
         actions: <Widget>[
-          Obx(
-            () => IconButton(
-              onPressed: controller.tenant == null ? null : controller.edit,
-              icon: const Icon(Icons.edit_outlined),
-              tooltip: 'edit'.tr,
-            ),
-          ),
-          Obx(
-            () => IconButton(
-              onPressed: controller.tenant == null
-                  ? null
-                  : () => _confirmDelete(context),
-              icon: const Icon(Icons.person_remove_outlined),
-              tooltip: 'delete'.tr,
-            ),
-          ),
+          // `tenant` is a plain field, so the bundle is the only observable
+          // these buttons can key off; one `Obx` covers both of them.
+          Obx(() {
+            final bool ready = controller.bundle.value != null;
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                IconButton(
+                  onPressed: ready ? controller.edit : null,
+                  icon: const Icon(Icons.edit_outlined),
+                  tooltip: 'edit'.tr,
+                ),
+                IconButton(
+                  onPressed: ready ? () => _confirmDelete(context) : null,
+                  icon: const Icon(Icons.person_remove_outlined),
+                  tooltip: 'delete'.tr,
+                ),
+              ],
+            );
+          }),
         ],
       ),
-      body: Obx(() {
+      // `StateMixin` notifies `GetBuilder`/`SimpleBuilder` listeners, not
+      // `Obx` proxies, so the loading branch must use `SimpleBuilder`.
+      body: SimpleBuilder(builder: (_) {
         final RxStatus status = controller.status;
         if (status.isLoading) {
           return const Center(child: CircularProgressIndicator());

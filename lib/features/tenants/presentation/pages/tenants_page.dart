@@ -88,32 +88,36 @@ class TenantsPage extends GetView<TenantsController> {
                 );
               }
 
-              final List<TenantEntity> tenants = controller.filteredTenants;
-              if (tenants.isEmpty) {
-                return AppEmptyState(
-                  icon: Icons.people_rounded,
-                  title: 'no_tenants'.tr,
-                  message: 'no_tenants_desc'.tr,
-                  actionLabel: 'add_tenant'.tr,
-                  onAction: () => controller.openTenantForm(),
-                );
-              }
+              // The search query and status filter are observables, so the
+              // list itself still needs `Obx` to rebuild on those changes.
+              return Obx(() {
+                final List<TenantEntity> tenants = controller.filteredTenants;
+                if (tenants.isEmpty) {
+                  return AppEmptyState(
+                    icon: Icons.people_rounded,
+                    title: 'no_tenants'.tr,
+                    message: 'no_tenants_desc'.tr,
+                    actionLabel: 'add_tenant'.tr,
+                    onAction: () => controller.openTenantForm(),
+                  );
+                }
 
-              return RefreshIndicator(
-                onRefresh: controller.loadTenants,
-                child: ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(20, 4, 20, 120),
-                  itemCount: tenants.length,
-                  separatorBuilder: (_, _) => const SizedBox(height: 12),
-                  itemBuilder: (BuildContext context, int index) {
-                    final TenantEntity tenant = tenants[index];
-                    return _TenantCard(
-                      tenant: tenant,
-                      onTap: () => controller.openTenantDetails(tenant),
-                    );
-                  },
-                ),
-              );
+                return RefreshIndicator(
+                  onRefresh: controller.loadTenants,
+                  child: ListView.separated(
+                    padding: const EdgeInsets.fromLTRB(20, 4, 20, 120),
+                    itemCount: tenants.length,
+                    separatorBuilder: (_, _) => const SizedBox(height: 12),
+                    itemBuilder: (BuildContext context, int index) {
+                      final TenantEntity tenant = tenants[index];
+                      return _TenantCard(
+                        tenant: tenant,
+                        onTap: () => controller.openTenantDetails(tenant),
+                      );
+                    },
+                  ),
+                );
+              });
             }),
           ),
         ],

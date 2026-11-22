@@ -56,6 +56,9 @@ class TenantFormPage extends GetView<TenantFormController> {
             Text('assigned_unit'.tr, style: text.titleSmall),
             const SizedBox(height: 10),
             Obx(() {
+              // Read the observable outside the branches so the empty branch is
+              // still a valid `Obx` body.
+              final String? selectedUnitId = controller.selectedUnitId.value;
               final List<UnitEntity> units = controller.availableUnits;
               if (units.isEmpty) {
                 return Text(
@@ -72,7 +75,7 @@ class TenantFormPage extends GetView<TenantFormController> {
                   for (final UnitEntity unit in units)
                     AppChoiceChip(
                       label: '${'unit'.tr} ${unit.unitNumber}',
-                      selected: controller.selectedUnitId.value == unit.id,
+                      selected: selectedUnitId == unit.id,
                       onTap: () => controller.selectUnit(unit),
                     ),
                 ],

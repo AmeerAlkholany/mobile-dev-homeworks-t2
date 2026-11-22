@@ -85,32 +85,36 @@ class UnitsPage extends GetView<UnitsController> {
                 );
               }
 
-              final List<UnitEntity> units = controller.filteredUnits;
-              if (units.isEmpty) {
-                return AppEmptyState(
-                  icon: Icons.apartment_rounded,
-                  title: 'no_units'.tr,
-                  message: 'no_units_desc'.tr,
-                  actionLabel: 'add_unit'.tr,
-                  onAction: () => controller.openUnitForm(),
-                );
-              }
+              // The search query and status filter are observables, so the
+              // list itself still needs `Obx` to rebuild on those changes.
+              return Obx(() {
+                final List<UnitEntity> units = controller.filteredUnits;
+                if (units.isEmpty) {
+                  return AppEmptyState(
+                    icon: Icons.apartment_rounded,
+                    title: 'no_units'.tr,
+                    message: 'no_units_desc'.tr,
+                    actionLabel: 'add_unit'.tr,
+                    onAction: () => controller.openUnitForm(),
+                  );
+                }
 
-              return RefreshIndicator(
-                onRefresh: controller.loadUnits,
-                child: ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(20, 4, 20, 120),
-                  itemCount: units.length,
-                  separatorBuilder: (_, _) => const SizedBox(height: 12),
-                  itemBuilder: (BuildContext context, int index) {
-                    final UnitEntity unit = units[index];
-                    return UnitCard(
-                      unit: unit,
-                      onTap: () => controller.openUnitDetails(unit),
-                    );
-                  },
-                ),
-              );
+                return RefreshIndicator(
+                  onRefresh: controller.loadUnits,
+                  child: ListView.separated(
+                    padding: const EdgeInsets.fromLTRB(20, 4, 20, 120),
+                    itemCount: units.length,
+                    separatorBuilder: (_, _) => const SizedBox(height: 12),
+                    itemBuilder: (BuildContext context, int index) {
+                      final UnitEntity unit = units[index];
+                      return UnitCard(
+                        unit: unit,
+                        onTap: () => controller.openUnitDetails(unit),
+                      );
+                    },
+                  ),
+                );
+              });
             }),
           ),
         ],
